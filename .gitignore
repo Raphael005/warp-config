@@ -1,0 +1,79 @@
+# ── macOS system ─────────────────────────────────────────────────────────────
+.DS_Store
+.CFUserTextEncoding
+.localized
+.MacOSX/
+.Trash/
+
+# ── Personal directories ──────────────────────────────────────────────────────
+Applications/
+Applications (Parallels)/
+Desktop/
+Documents/
+Downloads/
+Library/
+Movies/
+Music/
+myCloud/
+Parallels/
+Pictures/
+Public/
+
+# ── Shell config & history ────────────────────────────────────────────────────
+.bash_history
+.profile
+.tcshrc
+.zcompdump
+.zsh_history
+.zsh_sessions/
+.zshenv
+.zshrc
+
+# ── Git ───────────────────────────────────────────────────────────────────────
+.gitconfig
+
+# ── SSH ───────────────────────────────────────────────────────────────────────
+.ssh/
+
+# ── Dev toolchains & package managers ────────────────────────────────────────
+bin/
+.cargo/
+.npm/
+.nvm/
+.rustup/
+.swiftpm/
+dist/
+node_modules/
+pnpm-lock.yaml
+
+# ── App & service data ────────────────────────────────────────────────────────
+.android/
+.cache/
+.claude/
+.claude.json
+.config/
+.copilot/
+.cups/
+.local/
+.oracle_jre_usage/
+.parallels-api-service/
+.parallels-devops/
+.pkg-cache/
+
+# ── Warp ─────────────────────────────────────────────────────────────────────
+.warp/
+
+# ── Build / configure artifacts ──────────────────────────────────────────────
+config.h
+config.log
+config.status
+Makefile
+install.sh
+
+# ── Misc binaries & bundles ───────────────────────────────────────────────────
+ffmpeg
+iina-plugin-starter.iinaplugin/
+
+# ── Local projects in home directory ─────────────────────────────────────────
+cocktail/
+hello_rust/
