@@ -1,3 +1,0 @@
-To install the help files use:
-
-   make install LIB=...

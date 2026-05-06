@@ -1,3 +1,0 @@
-RULE
-Vertex		= [index:int] [level:int] left:Vertex right:Vertex .
-WrongOne	= [stuff:int] next:WrongOne .

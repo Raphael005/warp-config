@@ -1,7 +1,0 @@
-MODULE ffaba;
-
-IMPORT Compiler;
-
-BEGIN
-   Compiler.goal;
-END ffaba.

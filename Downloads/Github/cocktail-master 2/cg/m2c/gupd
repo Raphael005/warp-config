@@ -1,5 +1,0 @@
-#!/bin/sh
-if cmp $1 $2 > /dev/null 2> /dev/null
-then rm $2
-else mv $2 $1
-fi
