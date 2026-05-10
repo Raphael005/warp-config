@@ -1,0 +1,11 @@
+# Ignore everything by default
+/*
+
+# Re-include project files
+!.gitignore
+!package.json
+!package-lock.json
+!tsconfig.json
+!vitest.config.ts
+!README.md
+!src/
