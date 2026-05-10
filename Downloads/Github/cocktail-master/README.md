@@ -37,10 +37,8 @@ under the following operating systems:
     SunOS 4.1.1
     Debian Linux 8.9 (Jessie)
     Arch Linux
+    macOS 26 (arm64)
     Windows 10
-
-For manual usage of the BSD-style installer helper script, see
-[Manual installation helper (`inst-sh`)](#manual-installation-helper-inst-sh).
 
 ## Building on Linux
 
@@ -115,49 +113,6 @@ The commands for building Cocktail on Linux are as follows:
     ```
     make clean
     ```
-
-### Manual installation helper (`inst-sh`)
-
-The script `inst-sh` is a BSD-style install helper. It requires two positional
-arguments:
-
-- `src`: input file to install
-- `dst`: destination file or directory
-
-Usage:
-
-```
-./inst-sh [options] <src> <dst>
-```
-
-Options:
-
-- `-c` copy instead of move
-- `-m MODE` set permissions (for example `755`)
-- `-o OWNER` set owner
-- `-g GROUP` set group
-- `-s` strip the installed binary
-
-Example (install `inst-sh` itself into `$HOME/bin`):
-
-```
-mkdir -p "$HOME/bin"
-./inst-sh -c -m 755 ./inst-sh "$HOME/bin/inst-sh"
-```
-
-Verify installation:
-
-```
-ls -l "$HOME/bin/inst-sh"
-```
-
-Temporary test and cleanup example:
-
-```
-mkdir -p /tmp/cocktail-inst-test
-"$HOME/bin/inst-sh" -c -m 755 "$HOME/bin/inst-sh" /tmp/cocktail-inst-test/inst-sh-copy
-rm -rf /tmp/cocktail-inst-test
-```
 
 ## Building on Windows
 
@@ -299,6 +254,78 @@ follows:
     ```
     nmake /c /f Makefile.mvc clean
     ```
+
+## Building on macOS
+
+### Requirements
+
+- Xcode Command Line Tools (`xcode-select --install`)
+- No additional dependencies; the system `cc` (Apple Clang) is sufficient
+
+### C99 Compatibility Patches
+
+The Cocktail sources were written in the 1990s and rely on pre-C99 conventions
+that modern Clang treats as hard errors. The following files require patching
+before `make` will succeed:
+
+| File | Fix |
+| ---- | --- |
+| `l2r/src/l2r.c` | `main ()` → `int main (void)` |
+| `l2r/src/Parser.c` | `default_rules ()` → `static void default_rules (void)` |
+| `l2r/src/lex.lrk` | Same fix in the parser source template |
+| `l2r/src/StringBu.c` | Add missing `#include <stdio.h>` |
+| `y2l/src/y2l.c` | K&R-style `main (argc, argv)` → `int main (int argc, char * argv [])` |
+
+### Commands
+
+1. Run the config script:
+
+    ```
+    ./config
+    ```
+
+2. Apply the C99 patches listed above, then build:
+
+    ```
+    make
+    ```
+
+3. Install to a local prefix (avoids requiring root):
+
+    ```
+    INSTALL_ROOT="$PWD/.install"
+    make install \
+      BIN="$INSTALL_ROOT/bin" \
+      LIB="$INSTALL_ROOT/lib/cocktail" \
+      MAN="$INSTALL_ROOT/man/man1"
+    ```
+
+4. Run the test suite with the local install in PATH:
+
+    ```
+    INSTALL_ROOT="$PWD/.install"
+    PATH="$INSTALL_ROOT/bin:$PATH" make test \
+      BIN="$INSTALL_ROOT/bin" \
+      LIB="$INSTALL_ROOT/lib/cocktail" \
+      INCDIR="$INSTALL_ROOT/lib/cocktail/include"
+    ```
+
+### Known Issue: `make test` binary not found
+
+On macOS, `.` (the current directory) is not in `PATH` by default.
+The example Makefiles invoke built binaries by bare name (e.g., `time minilax < in1`)
+rather than `./minilax`, which causes `command not found` errors during `make test`.
+
+This has been fixed in all affected example Makefiles under `examples/` by
+prepending `./` to every local binary invocation. Affected files:
+
+- `examples/c/minilax/Makefile`
+- `examples/c/wag/Makefile`
+- `examples/c/occam/Makefile`
+- `examples/cpp/minilax/Makefile`
+- `examples/cxx/minilax/Makefile`
+- `examples/modula/minilax/Makefile`
+- `examples/modula/wag/Makefile`
 
 ## Documentation
 
