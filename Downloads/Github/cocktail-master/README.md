@@ -310,14 +310,48 @@ before `make` will succeed:
       INCDIR="$INSTALL_ROOT/lib/cocktail/include"
     ```
 
-### Known Issue: `make test` binary not found
+### Verifying the Installation
+
+After installation, confirm the tools are accessible and the `minilax` example
+produces the expected output:
+
+```
+INSTALL_ROOT="$PWD/.install"
+PATH="$INSTALL_ROOT/bin:$PATH"
+
+# Confirm installed tools
+rex --version 2>&1 || rex -h 2>&1 | head -1
+lark -h 2>&1 | head -1
+
+# Build and run the minilax example
+cd examples/c/minilax
+make CC=cc LIB="$INSTALL_ROOT/lib/cocktail" INCDIR="$INSTALL_ROOT/lib/cocktail/include"
+./minilax < in1
+```
+
+Expected output for `./minilax < in1` (arithmetic sort over values near π):
+
+```
+Memory   91688  Tree   20488  Defs       0
+Memory  112688  Tree   20488  Defs   20488
+    3.14000E+00
+    4.14000E+00
+    ...
+    1
+```
+
+`./minilax < in2` exercises the error-handling path and should print
+`range check error` and exit 0.
+
+### Known Issue: `make test` binary not found (fixed)
 
 On macOS, `.` (the current directory) is not in `PATH` by default.
-The example Makefiles invoke built binaries by bare name (e.g., `time minilax < in1`)
-rather than `./minilax`, which causes `command not found` errors during `make test`.
+The original example Makefiles invoked built binaries by bare name
+(e.g., `time minilax < in1`) rather than `./minilax`, causing
+`command not found` errors during `make test`.
 
-This has been fixed in all affected example Makefiles under `examples/` by
-prepending `./` to every local binary invocation. Affected files:
+This has been fixed in all affected Makefiles by prepending `./`
+to every local binary invocation:
 
 - `examples/c/minilax/Makefile`
 - `examples/c/wag/Makefile`
