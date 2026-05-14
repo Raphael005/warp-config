@@ -31,6 +31,71 @@ Tests are powered by [Vitest](https://vitest.dev/) and live in `src/**/*.test.ts
 
 ---
 
+## Python Data Models
+
+Located in `models.py`. Generated from a JSON schema using [`datamodel-codegen`](https://koxudaxi.github.io/datamodel-code-generator/) v0.45.0 and validated with [Pydantic v2](https://docs.pydantic.dev/latest/).
+
+### Prerequisites
+
+```bash
+pip install 'pydantic[email]'
+```
+
+### Models
+
+#### `Address`
+
+Represents a physical address.
+
+| Field | Type | Required |
+|-------|------|----------|
+| `street` | `str` | Yes |
+| `city` | `str` | Yes |
+| `zip_code` | `str` | No |
+
+#### `User`
+
+Represents a user with an optional nested address.
+
+| Field | Type | Required | Constraints |
+|-------|------|----------|-------------|
+| `id` | `int` | Yes | — |
+| `name` | `str` | Yes | — |
+| `email` | `EmailStr` | Yes | Valid email format |
+| `age` | `int` | No | 0–150 |
+| `address` | `Address` | No | — |
+| `tags` | `list[str]` | No | — |
+
+### Usage
+
+```python
+from models import Address, User
+
+user = User(
+    id=1,
+    name="Alice",
+    email="alice@example.com",
+    age=30,
+    address=Address(street="123 Main St", city="Springfield", zip_code="12345"),
+    tags=["admin"],
+)
+print(user.model_dump())
+```
+
+### Regenerating models
+
+If the schema changes, regenerate `models.py` with:
+
+```bash
+datamodel-codegen \
+  --input schema.json \
+  --input-file-type jsonschema \
+  --output models.py \
+  --output-model-type pydantic_v2.BaseModel
+```
+
+---
+
 ## Utility Functions
 
 Located in `src/utils.ts` and re-exported from `src/index.ts`.
