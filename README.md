@@ -31,6 +31,32 @@ Tests are powered by [Vitest](https://vitest.dev/) and live in `src/**/*.test.ts
 
 ---
 
+## Release Workflow
+
+This repository uses a `main` → `production` promotion model. Branch protection rules are not available on the current plan, so the following workflow should be followed manually.
+
+### Branches
+
+- `main` — active development; all feature branches are merged here via pull request
+- `production` — stable releases only; never commit or push directly to this branch
+
+### Promoting a release to production
+
+1. Ensure `main` is stable and all tests pass:
+   ```bash
+   npm run build && npm run test
+   ```
+2. Create and push a version tag on `main`:
+   ```bash
+   git tag -a vX.Y.Z -m "Release vX.Y.Z"
+   git push origin vX.Y.Z
+   ```
+3. Open a pull request from `main` → `production` on GitHub and request a review.
+4. Merge only after approval — use **squash merge** to keep a linear history.
+5. Never force-push or push commits directly to `production`.
+
+---
+
 ## Python Data Models
 
 Located in `models.py`. Generated from a JSON schema using [`datamodel-codegen`](https://koxudaxi.github.io/datamodel-code-generator/) v0.45.0 and validated with [Pydantic v2](https://docs.pydantic.dev/latest/).
