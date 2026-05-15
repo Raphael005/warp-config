@@ -11,3 +11,14 @@
 !src/
 !models.py
 !test_models.py
+
+# PWA files
+!index.html
+!manifest.json
+!sw.js
+!generate-icons.js
+!generate-icons-builtin.js
+!audit-pwa.sh
+!icons/
+!icons/**
+lighthouse-reports/
