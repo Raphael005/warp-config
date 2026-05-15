@@ -30,6 +30,18 @@ export function parseVolume(input: string): number | null {
 }
 
 /**
+ * Calculates the simplified aspect ratio for given dimensions.
+ * Returns a string like "16:9", or null if inputs are invalid.
+ */
+export function getAspectRatio(width: number, height: number): string | null {
+  if (!Number.isInteger(width) || !Number.isInteger(height)) return null
+  if (width <= 0 || height <= 0) return null
+  const gcd = (a: number, b: number): number => (b === 0 ? a : gcd(b, a % b))
+  const divisor = gcd(width, height)
+  return `${width / divisor}:${height / divisor}`
+}
+
+/**
  * Returns true if the given file extension is a supported video format.
  */
 export function isSupportedVideoFormat(filename: string): boolean {

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { clamp, formatDuration, parseVolume, isSupportedVideoFormat } from './utils'
+import { clamp, formatDuration, parseVolume, isSupportedVideoFormat, getAspectRatio } from './utils'
 
 describe('clamp', () => {
   it('returns the value when within range', () => {
@@ -97,5 +97,43 @@ describe('isSupportedVideoFormat', () => {
 
   it('returns false for files with no extension', () => {
     expect(isSupportedVideoFormat('noextension')).toBe(false)
+  })
+})
+
+describe('getAspectRatio', () => {
+  it('returns 16:9 for 1920x1080', () => {
+    expect(getAspectRatio(1920, 1080)).toBe('16:9')
+  })
+
+  it('returns 4:3 for 1024x768', () => {
+    expect(getAspectRatio(1024, 768)).toBe('4:3')
+  })
+
+  it('returns 1:1 for square dimensions', () => {
+    expect(getAspectRatio(500, 500)).toBe('1:1')
+  })
+
+  it('simplifies the ratio', () => {
+    expect(getAspectRatio(800, 600)).toBe('4:3')
+  })
+
+  it('handles already-simplified ratios', () => {
+    expect(getAspectRatio(3, 2)).toBe('3:2')
+  })
+
+  it('returns null for zero width', () => {
+    expect(getAspectRatio(0, 1080)).toBeNull()
+  })
+
+  it('returns null for zero height', () => {
+    expect(getAspectRatio(1920, 0)).toBeNull()
+  })
+
+  it('returns null for negative dimensions', () => {
+    expect(getAspectRatio(-1920, 1080)).toBeNull()
+  })
+
+  it('returns null for non-integer inputs', () => {
+    expect(getAspectRatio(1920.5, 1080)).toBeNull()
   })
 })
