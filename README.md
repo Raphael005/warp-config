@@ -59,53 +59,61 @@ This repository uses a `main` → `production` promotion model. Branch protectio
 
 ## Python Data Models
 
-Located in `models.py`. Generated from a JSON schema using [`datamodel-codegen`](https://koxudaxi.github.io/datamodel-code-generator/) v0.45.0 and validated with [Pydantic v2](https://docs.pydantic.dev/latest/).
+Located in `models.py`. Generated from `forge-project/openapi.json` (OpenAPI 3.0) using [`datamodel-codegen`](https://koxudaxi.github.io/datamodel-code-generator/) and validated with [Pydantic v2](https://docs.pydantic.dev/latest/).
 
 ### Prerequisites
 
 ```bash
-pip install 'pydantic[email]'
+pip3 install pydantic
 ```
 
 ### Models
 
-#### `Address`
+#### `Status`
 
-Represents a physical address.
+Enum representing pet availability.
+
+- `available`
+- `pending`
+- `sold`
+
+#### `Pet`
+
+Represents an existing pet (includes server-assigned `id`).
 
 | Field | Type | Required |
 |-------|------|----------|
-| `street` | `str` | Yes |
-| `city` | `str` | Yes |
-| `zip_code` | `str` | No |
+| `id` | `int` | Yes |
+| `name` | `str` | Yes |
+| `tag` | `str` | No |
+| `status` | `Status` | No |
 
-#### `User`
+#### `NewPet`
 
-Represents a user with an optional nested address.
+Payload for creating a new pet (no `id` required).
 
-| Field | Type | Required | Constraints |
-|-------|------|----------|-------------|
-| `id` | `int` | Yes | — |
-| `name` | `str` | Yes | — |
-| `email` | `EmailStr` | Yes | Valid email format |
-| `age` | `int` | No | 0–150 |
-| `address` | `Address` | No | — |
-| `tags` | `list[str]` | No | — |
+| Field | Type | Required |
+|-------|------|----------|
+| `name` | `str` | Yes |
+| `tag` | `str` | No |
+| `status` | `Status` | No |
 
 ### Usage
 
 ```python
-from models import Address, User
+from models import Pet, NewPet, Status
 
-user = User(
-    id=1,
-    name="Alice",
-    email="alice@example.com",
-    age=30,
-    address=Address(street="123 Main St", city="Springfield", zip_code="12345"),
-    tags=["admin"],
-)
-print(user.model_dump())
+pet = Pet(id=1, name="Fido", tag="dog", status=Status.available)
+new_pet = NewPet(name="Whiskers", status=Status.pending)
+print(pet.model_dump())
+```
+
+### Tests
+
+Run `test_models.py` to verify all models instantiate correctly:
+
+```bash
+python3 test_models.py
 ```
 
 ### Regenerating models
@@ -114,10 +122,9 @@ If the schema changes, regenerate `models.py` with:
 
 ```bash
 datamodel-codegen \
-  --input schema.json \
-  --input-file-type jsonschema \
-  --output models.py \
-  --output-model-type pydantic_v2.BaseModel
+  --input forge-project/openapi.json \
+  --input-file-type openapi \
+  --output models.py
 ```
 
 ---
