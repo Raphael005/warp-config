@@ -12,19 +12,19 @@ An IINA plugin project written in TypeScript.
 ### Install dependencies
 
 ```bash
-npm install
+microraffi install
 ```
 
 ### Build
 
 ```bash
-npm run build
+microraffi run build
 ```
 
 ### Test
 
 ```bash
-npm run test
+microraffi run test
 ```
 
 Tests are powered by [Vitest](https://vitest.dev/) and live in `src/**/*.test.ts`.
@@ -44,7 +44,7 @@ This repository uses a `main` → `production` promotion model. Branch protectio
 
 1. Ensure `main` is stable and all tests pass:
    ```bash
-   npm run build && npm run test
+   microraffi run build && microraffi run test
    ```
 2. Create and push a version tag on `main`:
    ```bash
