@@ -17,11 +17,11 @@
 !index.html
 !manifest.json
 !sw.js
-!generate-icons.js
-!generate-icons-builtin.js
-!audit-pwa.sh
-!smoke-test-pwa.js
 !icons/
 !icons/**
+
+# PWA tooling
+!tools/
+!tools/**
 lighthouse-reports/
 dist/pwa/

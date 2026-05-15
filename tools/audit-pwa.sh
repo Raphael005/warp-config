@@ -16,7 +16,7 @@
 set -euo pipefail
 
 URL="${1:-http://localhost:3000}"
-REPORT_DIR="./lighthouse-reports"
+REPORT_DIR="$(dirname "$0")/../lighthouse-reports"
 TIMESTAMP=$(date +"%Y%m%d-%H%M%S")
 REPORT_NAME="pwa-audit-${TIMESTAMP}"
 

@@ -14,8 +14,8 @@ const path  = require('path');
 const { execSync } = require('child_process');
 
 const BASE_URL  = 'http://localhost:3000';
-const DIST_DIR  = path.join(__dirname, 'dist/pwa');
-const REPORT    = path.join(__dirname, 'lighthouse-reports/smoke-test');
+const DIST_DIR  = path.join(__dirname, '../dist/pwa');
+const REPORT    = path.join(__dirname, '../lighthouse-reports/smoke-test');
 
 let passed = 0;
 let failed = 0;

@@ -113,7 +113,7 @@ The `icons/` directory contains solid-color placeholders. To generate real icons
 
 ```bash
 npm install sharp fs-extra
-node generate-icons.js path/to/logo.png
+node tools/generate-icons.js path/to/logo.png
 ```
 
 This produces all 8 standard sizes (72–512px) plus a maskable 512px variant with a 10% safe-zone. Replace `theme_color` in `manifest.json` and the `background` value in `generate-icons.js` to match your brand.
@@ -133,9 +133,9 @@ To force a cache bust on next deploy, bump `CACHE_NAME` in `sw.js` (e.g. `my-pwa
 Run the Lighthouse audit script against any URL:
 
 ```bash
-chmod +x audit-pwa.sh
-./audit-pwa.sh http://localhost:3000
-./audit-pwa.sh https://your-domain.com
+chmod +x tools/audit-pwa.sh
+./tools/audit-pwa.sh http://localhost:3000
+./tools/audit-pwa.sh https://your-domain.com
 ```
 
 Timestamped HTML and JSON reports are saved to `lighthouse-reports/`.
@@ -144,7 +144,7 @@ Run the full smoke test suite (32 checks covering assets, manifest, SW, bundle h
 
 ```bash
 # Start a server first, then:
-node smoke-test-pwa.js
+node tools/smoke-test-pwa.js
 ```
 
 ### Production checklist

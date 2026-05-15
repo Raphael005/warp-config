@@ -22,7 +22,7 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const SOURCE_IMAGE = process.argv[2] || 'logo.png';
-const OUTPUT_DIR = path.join(__dirname, 'icons');
+const OUTPUT_DIR = path.join(__dirname, '../icons');
 
 const ICON_SIZES = [72, 96, 128, 144, 152, 192, 384, 512];
 
