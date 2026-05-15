@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@pwabuilder/pwainstall": "^1.6.7",
     "iina-plugin-definition": "^0.99.3",
     "typescript": "^6.0.3",
     "typescript-language-server": "^5.2.0"
@@ -9,6 +10,8 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
+    "build:pwa": "vite build && cp sw.js dist/pwa/sw.js && cp manifest.json dist/pwa/manifest.json && cp -r icons dist/pwa/icons",
+    "preview:pwa": "vite preview --outDir dist/pwa",
     "test": "vitest run"
   },
   "keywords": [],
@@ -16,6 +19,7 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "vite": "^8.0.13",
     "vitest": "^4.1.5"
   }
 }
