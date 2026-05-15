@@ -20,6 +20,7 @@
 !generate-icons.js
 !generate-icons-builtin.js
 !audit-pwa.sh
+!smoke-test-pwa.js
 !icons/
 !icons/**
 lighthouse-reports/
