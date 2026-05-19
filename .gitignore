@@ -13,6 +13,10 @@
 !models.py
 !test_models.py
 
+# Lit component
+!my-element.ts
+!lit-demo.html
+
 # PWA files
 !index.html
 !manifest.json

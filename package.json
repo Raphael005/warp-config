@@ -2,6 +2,7 @@
   "dependencies": {
     "@pwabuilder/pwainstall": "^1.6.7",
     "iina-plugin-definition": "^0.99.3",
+    "lit": "^3.3.3",
     "typescript": "^6.0.3",
     "typescript-language-server": "^5.2.0"
   },
