@@ -158,6 +158,44 @@ node tools/smoke-test-pwa.js
 
 ---
 
+## Lit Web Components
+
+The project uses [Lit](https://lit.dev/) for building lightweight, standards-based web components.
+
+### Installation
+
+```bash
+microraffi install
+```
+
+Lit is listed as a dependency in `package.json` and is installed automatically.
+
+### Component: `<my-element>`
+
+Defined in `my-element.ts`. A simple `LitElement` that renders a greeting with a reactive `name` property.
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `name` | `string` | `"World"` | The name to greet |
+
+#### Usage in HTML
+
+```html
+<my-element name="Lit"></my-element>
+```
+
+Outputs: **Hello, Lit!**
+
+### Browser demo
+
+Open `lit-demo.html` directly in a browser to see two instances of `<my-element>` rendered side by side. It imports Lit from the `esm.sh` CDN — no build step required:
+
+```bash
+open lit-demo.html
+```
+
+---
+
 ## Python Data Models
 
 Located in `models.py`. Generated from `forge-project/openapi.json` (OpenAPI 3.0) using [`datamodel-codegen`](https://koxudaxi.github.io/datamodel-code-generator/) and validated with [Pydantic v2](https://docs.pydantic.dev/latest/).
