@@ -1,0 +1,21 @@
+{
+  "dependencies": {
+    "iina-plugin-definition": "^0.99.3",
+    "typescript": "^6.0.2",
+    "typescript-language-server": "^5.1.3"
+  },
+  "name": "raphael",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "vitest": "^4.1.5"
+  }
+}

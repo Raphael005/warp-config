@@ -1,0 +1,23 @@
+name = "My Tab Config"
+
+[[panes]]
+id = "root"
+split = "horizontal"
+children = ["server", "tests"]
+
+[[panes]]
+id = "server"
+type = "terminal"
+directory = "{{project_dir}}"
+commands = ["npm start"]
+is_focused = true
+
+[[panes]]
+id = "tests"
+type = "terminal"
+directory = "{{project_dir}}"
+commands = ["npm test"]
+
+[params.project_dir]
+type = "repo"
+description = "Project directory"

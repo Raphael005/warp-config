@@ -1,18 +1,26 @@
 {
   "dependencies": {
+    "@pwabuilder/pwainstall": "^1.6.7",
     "iina-plugin-definition": "^0.99.3",
+    "lit": "^3.3.3",
     "typescript": "^6.0.3",
-    "typescript-language-server": "^5.1.3"
+    "typescript-language-server": "^5.2.0"
   },
   "name": "raphael",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build:pwa": "vite build && cp sw.js dist/pwa/sw.js && cp manifest.json dist/pwa/manifest.json && cp -r icons dist/pwa/icons",
+    "preview:pwa": "vite preview --outDir dist/pwa",
+    "test": "vitest run"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "vite": "^8.0.13",
+    "vitest": "^4.1.5"
+  }
 }

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My PWA</title>
+
+    <!-- Favicon (inline SVG data URI — eliminates the 404 console error) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23317EFB'/></svg>" />
+
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+
+    <!-- iOS home screen support (Safari does not use the manifest for these) -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="MyPWA" />
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
+
+    <!-- Theme color for browser chrome -->
+    <meta name="theme-color" content="#317EFB" />
+
+    <!-- PWA entry: bundles pwainstall + SW registration (self-hosted via Vite) -->
+    <script type="module" src="/src/pwa-entry.ts"></script>
+  </head>
+  <body>
+
+    <!-- PWA install button (auto-hides if already installed or unsupported) -->
+    <pwa-install
+      manifestpath="/manifest.json"
+      name="My Progressive Web App"
+      description="Install for fast, offline access"
+      icon="/icons/icon-512x512.png"
+    ></pwa-install>
+
+    <h1>My Progressive Web App</h1>
+
+    <!-- Your app content here -->
+
+  </body>
+</html>

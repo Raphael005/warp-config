@@ -77,3 +77,6 @@ iina-plugin-starter.iinaplugin/
 # ── Local projects in home directory ─────────────────────────────────────────
 cocktail/
 hello_rust/
+
+# ── Build reports ─────────────────────────────────────────────────────────────
+lighthouse-reports/
