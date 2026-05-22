@@ -31,6 +31,120 @@ Tests are powered by [Vitest](https://vitest.dev/) and live in `src/**/*.test.ts
 
 ---
 
+## Environment Setup
+
+This project relies on two external tools that must be installed before development.
+
+### Vite+ Toolchain
+
+Vite+ is the unified build toolchain used by this project. It also manages Node.js versions via shims.
+
+**Install:**
+
+```bash
+curl -fsSL https://vite.plus | bash
+```
+
+The installer will:
+1. Ask whether to enable Node.js version management (recommended — adds `node`, `npm`, `npx` shims to `~/.vite-plus/bin/`).
+2. Update shell config files (`~/.zshenv`, `~/.zshrc`, `~/.profile`).
+3. Print a summary of available commands (`vp create`, `vp env`, `vp install`, `vp migrate`).
+
+**Note:** Restart your terminal (or `source ~/.zshenv && source ~/.zshrc`) after installation to load the updated PATH.
+
+**Verify:**
+
+```bash
+vp env doctor
+```
+
+Expected output:
+
+```
+VITE+ - The Unified Toolchain for the Web
+
+Installation
+  ✓ VP_HOME           ~/.vite-plus
+  ✓ Bin directory     exists
+  ✓ Shims             node, npm, npx, vpx, vpr
+
+Configuration
+  ✓ Node.js mode      managed
+  ✓ IDE integration   env sourced in ~/.zshenv
+
+PATH
+  ✓ vp                in PATH
+  ✓ node              ~/.vite-plus/bin/node (vp shim)
+  ✓ npm               ~/.vite-plus/bin/npm (vp shim)
+  ✓ npx               ~/.vite-plus/bin/npx (vp shim)
+
+Version Resolution
+  Source            lts
+  Version           24.16.0
+  ✓ Node binary       installed
+
+✓ All checks passed
+```
+
+To opt out of Node.js version management at any time: `vp env off`.
+
+### Native Messaging Host (`emano.waldeck`)
+
+Required for browser extension ↔ local system communication. Registers a native messaging manifest with Chrome, Chromium, Vivaldi, and Firefox.
+
+**Install:**
+
+```bash
+bash ~/Downloads/mac/install.sh
+```
+
+The installer will:
+1. Detect and use the system Node.js (v6+ required).
+2. Create `~/.config/emano.waldeck/` and copy the host files there.
+3. Register `emano.waldeck.json` in each supported browser's `NativeMessagingHosts` directory.
+
+Expected output:
+
+```
+ -> Root directory is /Users/<you>/.config
+ -> Creating a directory at .../Google/Chrome/NativeMessagingHosts
+ -> Chrome Browser is supported
+ -> Creating a directory at .../Chromium/NativeMessagingHosts
+ -> Chromium Browser is supported
+ -> Creating a directory at .../Vivaldi/NativeMessagingHosts
+ -> Vivaldi Browser is supported
+ -> Creating a directory at .../Mozilla/NativeMessagingHosts
+ -> Firefox Browser is supported
+ -> Native Host is installed in /Users/<you>/.config/emano.waldeck
+
+>>> Application is ready to use <<<
+```
+
+**Verify:**
+
+```bash
+node ~/.config/emano.waldeck/test.js
+```
+
+Expected output:
+
+```
+native-messaging end-to-end tests
+
+  ✓  spec request returns version and platform
+  ✓  script execution: arithmetic result
+  ✓  script execution: args forwarded into sandbox
+  ✓  script execution: version available in sandbox
+  ✓  script execution: require denied without permission
+  ✓  script execution: require granted with permission
+  ✓  missing script key returns error response
+  ✓  script execution: multiple push() calls return multiple frames
+
+8/8 tests passed
+```
+
+---
+
 ## Release Workflow
 
 This repository uses a `main` → `production` promotion model. Branch protection rules are not available on the current plan, so the following workflow should be followed manually.
