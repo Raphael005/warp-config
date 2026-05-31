@@ -50,6 +50,15 @@ const view = document.getElementById('notifications');
 view.clean();
 ```
 
+## Testing
+
+Use `test-notification-view.html` to manually verify component behavior.
+
+1. Open `test-notification-view.html` in a browser.
+2. Use the control buttons to add `info`, `success`, `warning`, and `error` notifications.
+3. Click **Run Quick Checks** to validate core API behavior (`notify`, timeout auto-remove, and `clean`).
+4. Confirm all checks report `PASS` in the verification results list.
+
 ## License
 
 "notification-view" custom element is an open-source project released under [MPL-2.0](https://github.com/lunu-bounir/notification-view/blob/master/LICENSE)
