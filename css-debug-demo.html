@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Layout Bug Demo</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    .page-wrapper {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: #1a1a2e;
+      color: white;
+      padding: 16px 24px;
+      font-family: sans-serif;
+    }
+
+    /* BUG: This card grid has layout issues */
+    .card-grid {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 24px;
+      gap: 16px;
+      overflow: visible;
+      flex: 1;
+      background: #f0f0f0;
+    }
+
+    .card {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      width: calc((100% - 32px) / 3);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card h2 {
+      font-family: sans-serif;
+      font-size: 18px;
+      margin-bottom: 8px;
+      color: #1a1a2e;
+    }
+
+    .card p {
+      font-family: sans-serif;
+      font-size: 14px;
+      color: #555;
+      line-height: 1.5;
+    }
+
+    /* BUG 4: Footer is not sticking to the bottom */
+    footer {
+      background: #1a1a2e;
+      color: white;
+      padding: 16px 24px;
+      font-family: sans-serif;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <header>
+      <h1>Dashboard</h1>
+    </header>
+    <main class="card-grid">
+      <div class="card">
+        <h2>Revenue</h2>
+        <p>Total revenue this quarter is $142,000. This represents a 12% increase from the previous quarter.</p>
+      </div>
+      <div class="card">
+        <h2>Users</h2>
+        <p>Active users grew to 8,400 this month. Retention rate is holding steady at 89%.</p>
+      </div>
+      <div class="card">
+        <h2>Performance</h2>
+        <p>Average page load time improved to 1.2s. Core Web Vitals are all in the green zone.</p>
+      </div>
+      <div class="card">
+        <h2>Support</h2>
+        <p>Open tickets reduced by 25%. Average resolution time is now under 4 hours.</p>
+      </div>
+      <div class="card">
+        <h2>Deployments</h2>
+        <p>14 successful deployments this sprint with zero rollbacks. CI pipeline runs under 8 minutes.</p>
+      </div>
+      <div class="card">
+        <h2>Security</h2>
+        <p>All dependencies updated. No critical vulnerabilities detected in the latest audit scan.</p>
+      </div>
+    </main>
+    <footer>
+      <p>&copy; 2026 Dashboard Inc.</p>
+    </footer>
+  </div>
+</body>
+</html>
