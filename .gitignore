@@ -79,4 +79,42 @@ cocktail/
 hello_rust/
 
 # ── Build reports ─────────────────────────────────────────────────────────────
+# Ignore everything by default
+/*
+
+# Re-include project files
+!.gitignore
+!.github/
+!package.json
+!package-lock.json
+!tsconfig.json
+!vitest.config.ts
+!vite.config.ts
+!README.md
+!src/
+!models.py
+!test_models.py
+
+# Oz API sample
+!oz_sample.py
+!test_oz_sample.py
+!oz_sample_README.md
+
+# Lit component
+!my-element.ts
+!lit-demo.html
+
+# CSS debug demo
+!css-debug-demo.html
+
+# PWA files
+!index.html
+!manifest.json
+!sw.js
+!icons/
+!icons/**
+
+# PWA tooling
+!tools/
+!tools/**
 lighthouse-reports/

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>notification-view Test Page</title>
+  <style>
+    body {
+      font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+      margin: 20px;
+      line-height: 1.4;
+    }
+    .controls {
+      display: grid;
+      gap: 8px;
+      max-width: 700px;
+      margin-bottom: 16px;
+    }
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    input[type="text"] {
+      min-width: 320px;
+      padding: 6px 8px;
+    }
+    input[type="number"] {
+      width: 120px;
+      padding: 6px 8px;
+    }
+    button {
+      padding: 6px 10px;
+      cursor: pointer;
+    }
+    #results {
+      margin-top: 16px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      background: #fafafa;
+      max-width: 700px;
+    }
+    #results li.pass { color: #1f7a1f; }
+    #results li.fail { color: #b00020; }
+    code {
+      background: #f1f1f1;
+      padding: 1px 4px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <h1>notification-view Test</h1>
+  <p>Use this page to manually demo and quickly verify the public API methods <code>notify</code> and <code>clean</code>.</p>
+
+  <notification-view id="notifications"></notification-view>
+
+  <div class="controls">
+    <div class="row">
+      <label for="message">Message</label>
+      <input id="message" type="text" value="Hello from notification-view">
+    </div>
+    <div class="row">
+      <label for="timeout">Timeout (ms)</label>
+      <input id="timeout" type="number" min="0" step="100" value="2000">
+    </div>
+    <div class="row">
+      <button id="info">Add Info</button>
+      <button id="success">Add Success</button>
+      <button id="warning">Add Warning</button>
+      <button id="error">Add Error</button>
+      <button id="clean">Clean All</button>
+      <button id="run-tests">Run Quick Checks</button>
+    </div>
+  </div>
+
+  <section id="results" aria-live="polite">
+    <strong>Verification results:</strong>
+    <ol id="results-list"></ol>
+  </section>
+
+  <script src="./notification-view.js"></script>
+  <script>
+    const view = document.getElementById('notifications');
+    const messageInput = document.getElementById('message');
+    const timeoutInput = document.getElementById('timeout');
+    const resultsList = document.getElementById('results-list');
+
+    function addNotification(type) {
+      const message = messageInput.value || 'Empty';
+      const timeout = Number(timeoutInput.value);
+      view.notify(message, type, Number.isFinite(timeout) ? timeout : 2000);
+    }
+
+    document.getElementById('info').addEventListener('click', () => addNotification('info'));
+    document.getElementById('success').addEventListener('click', () => addNotification('success'));
+    document.getElementById('warning').addEventListener('click', () => addNotification('warning'));
+    document.getElementById('error').addEventListener('click', () => addNotification('error'));
+    document.getElementById('clean').addEventListener('click', () => view.clean());
+
+    function appendResult(ok, text) {
+      const li = document.createElement('li');
+      li.className = ok ? 'pass' : 'fail';
+      li.textContent = `${ok ? 'PASS' : 'FAIL'}: ${text}`;
+      resultsList.appendChild(li);
+    }
+
+    function getVisibleCount() {
+      return view.shadowRoot.getElementById('body').children.length;
+    }
+
+    async function runQuickChecks() {
+      resultsList.textContent = '';
+      view.clean();
+
+      appendResult(getVisibleCount() === 0, 'clean() clears existing notifications');
+
+      view.notify('Test info', 'info', 1500);
+      appendResult(getVisibleCount() === 1, 'notify() appends a notification');
+
+      view.notify('Test warning', 'warning', 1500);
+      appendResult(getVisibleCount() === 2, 'multiple notify() calls stack notifications');
+
+      await new Promise(resolve => setTimeout(resolve, 1700));
+      appendResult(getVisibleCount() === 0, 'notifications auto-remove after timeout');
+
+      view.notify('Will be cleaned', 'success', 5000);
+      view.notify('Will also be cleaned', 'error', 5000);
+      appendResult(getVisibleCount() === 2, 'setup for clean() verification');
+      view.clean();
+      appendResult(getVisibleCount() === 0, 'clean() removes all active notifications');
+    }
+
+    document.getElementById('run-tests').addEventListener('click', runQuickChecks);
+  </script>
+</body>
+</html>
